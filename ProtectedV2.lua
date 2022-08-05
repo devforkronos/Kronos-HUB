@@ -2,6 +2,7 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/JOJOGIO/STAND-FRAMEWORK/main/v.1.0.9"))()
 --/---------------------------------------------------------------------------------------------\--/ Actions :
 CreateTargetAbility("Banish!", function() 
+                local target = Stand.Target
 local Loop
         local OldFlingPos = player.Character.HumanoidRootPart.Position
         local loopFunction = function()
