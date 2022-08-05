@@ -36,7 +36,7 @@ Create("/e summon", function() Equip("Combat") Chat("I am waiting for your comma
 Create("/e summon", function() Stand.Action = "Crew" pcall(function() game:GetService("RunService"):UnbindFromRenderStep("TARGETKILL") game:GetService("RunService"):UnbindFromRenderStep("GRAB") end) end)
 Create("!crew", function() Play(8655611378, true) Chat("Joined owners crew!") local CurrentCrew = STAND:WaitForChild('DataFolder').Information.Crew local CurrentOwnerCrew = OWNER:WaitForChild('DataFolder').Information.Crew if CurrentCrew.Value == CurrentOwnerCrew.Value then Stand.Action = "Summoned" else Crew(true,CurrentOwnerCrew.Value) end end)
 Create("!uncrew", function() Play(8655611378, true) Chat("Left owners crew!") Crew(false) end)
-Create("!ad", function() Stand.Action = "Crew" Play(8655611378, true) Stand.Action = "Summoned" Chat("!! matters 0126 for script") end)
+Create("!ad", function() Stand.Action = "Crew" Play(8655611378, true) Stand.Action = "Summoned" Chat("Anth 1337 for script") end)
 Create("!freeze", function()Stand.Action = "Crew" Play(8655611378, true) Stand.Action = "Freeze" Chat("I shall stay put, master.") Play(6696048331, true) end)
 Create("!rejoin", function()Stand.Action = "Crew" Play(8655611378, true) Stand.Action = "Summoned" Chat("I will be back.") wait(1) Stand.Action = "Rejoin" end) 
 Create("!drop", function() Stand.Action = "Crew" Play(8655611378, true) Chat("Auto-drop enabled!") Stand.Action = "Drop" end) 
@@ -79,65 +79,6 @@ CreateTargetAbility("!trap", function() Play(8655611378, true) Stand.Action = ""
 CreateTargetAbility("!void", function() Play(8655611378, true) Stand.Action = "" Crew(false) Equip("Combat") Chat("Voiding target!") wait(1) local Target = Stand.Target if Target then Stand.Action = "" game:GetService("RunService"):BindToRenderStep("GRAB", -1 , function() if Target and Target.Character and Target.Character:FindFirstChild("BodyEffects") and Target.Character.BodyEffects:FindFirstChild("K.O") then if Target.Character.BodyEffects["K.O"].Value == true then STAND.Character.HumanoidRootPart.CFrame = CFrame.new(Target.Character.UpperTorso.Position.X , Target.Character.UpperTorso.Position.Y + 1, Target.Character.UpperTorso.Position.Z ) if STAND.Character.BodyEffects["Grabbed"].Value == nil then game:GetService("VirtualInputManager"):SendKeyEvent(true,"G",false,game) end end if Target.Character.BodyEffects["K.O"].Value == false then STAND.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame*CFrame.new(0,-6,0) if STAND.Character:FindFirstChildWhichIsA("Tool") then Hit(true) else Equip("Combat") Hit(true) end end if Target == nil or STAND.Character.BodyEffects["Grabbed"].Value ~= nil then local CurrentCrew = STAND:WaitForChild('DataFolder').Information.Crew local CurrentOwnerCrew = OWNER:WaitForChild('DataFolder').Information.Crew if CurrentCrew.Value == CurrentOwnerCrew.Value then Stand.Action = "Summoned" else Crew(true,CurrentOwnerCrew.Value) game:GetService("RunService"):UnbindFromRenderStep("GRAB") STAND.Character.HumanoidRootPart.CFrame = CFrame.new(0,100000,0) wait(4) game:GetService("VirtualInputManager"):SendKeyEvent(true,"G",false,game) wait(2) Stand.Action = "Summoned" end end end end) end end)
 CreateTargetAbility("!bring", function() Play(8655611378, true) Stand.Action = "" Crew(false) Equip("Combat") Chat("Bringing target!") wait(1) local Target = Stand.Target if Target then Stand.Action = "" game:GetService("RunService"):BindToRenderStep("GRAB", -1 , function() if Target and Target.Character and Target.Character:FindFirstChild("BodyEffects") and Target.Character.BodyEffects:FindFirstChild("K.O") then if Target.Character.BodyEffects["K.O"].Value == true then STAND.Character.HumanoidRootPart.CFrame = CFrame.new(Target.Character.UpperTorso.Position.X , Target.Character.UpperTorso.Position.Y + 1, Target.Character.UpperTorso.Position.Z ) if STAND.Character.BodyEffects["Grabbed"].Value == nil then game:GetService("VirtualInputManager"):SendKeyEvent(true,"G",false,game) end end if Target.Character.BodyEffects["K.O"].Value == false then STAND.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame*CFrame.new(0,-6,0) if STAND.Character:FindFirstChildWhichIsA("Tool") then Hit(true) else Equip("Combat") Hit(true) end end if Target == nil or STAND.Character.BodyEffects["Grabbed"].Value ~= nil then local CurrentCrew = STAND:WaitForChild('DataFolder').Information.Crew local CurrentOwnerCrew = OWNER:WaitForChild('DataFolder').Information.Crew if CurrentCrew.Value == CurrentOwnerCrew.Value then Stand.Action = "Summoned" else Crew(true,CurrentOwnerCrew.Value) game:GetService("RunService"):UnbindFromRenderStep("GRAB") Stand.Action = "Summoned" wait(2) game:GetService("VirtualInputManager"):SendKeyEvent(true,"G",false,game) wait(2) game:GetService("VirtualInputManager"):SendKeyEvent(true,"G",false,game) end end end end) end end)
 CreateTargetAbility("!goto", function() Play(8655611378, true) Stand.Action = "" Crew(false) Equip("Combat") Chat("Bringing to target!") wait(1) local Target = Stand.Target Crew(false) Stand.Action = "" repeat wait() if OWNER.Character.BodyEffects["K.O"].Value == false then Hit(true) STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.UpperTorso.CFrame wait(2) STAND.Character.HumanoidRootPart.CFrame = CFrame.new(OWNER.Character.UpperTorso.Position.X , OWNER.Character.UpperTorso.Position.Y +0.5, OWNER.Character.UpperTorso.Position.Z ) wait(0.5) if STAND.Character.BodyEffects["Grabbed"].Value == nil and  OWNER.Character.BodyEffects["K.O"].Value == true then wait(1) STAND.Character.HumanoidRootPart.CFrame = CFrame.new(OWNER.Character.UpperTorso.Position.X , OWNER.Character.UpperTorso.Position.Y +0.5, OWNER.Character.UpperTorso.Position.Z ) wait(.5) if STAND.Character.BodyEffects["Grabbed"].Value == nil then wait(1) game:GetService("ReplicatedStorage").MainEvent:FireServer("Grabbing", false) end end end until Stand.Action == "Summoned" or Target == nil or not Target.Character.BodyEffects:FindFirstChild("K.O") or not Target.Character.BodyEffects:FindFirstChild("Defense") or STAND.Character.BodyEffects["Grabbed"].Value ~= nil if Target.Character.BodyEffects["K.O"].Value == false then STAND.Character.HumanoidRootPart.CFrame = Target.Character.UpperTorso.CFrame elseif Target.Character.BodyEffects["K.O"].Value == true then  wait(1) game:GetService("ReplicatedStorage").MainEvent:FireServer("Grabbing", false) wait(2) Stand.Action = "Crew" wait(0.5) Stand.Action = "Summoned" end end)
-CreateTargetAbility("Smite!", function() --/ Inside the " " we have named this ability Print, So if we were to type Print and portion of someone's display or username in-game the command would run utilizing function (4)
-local Target = Stand.Target --/ We define our target & You should do this for each CreateTargetAbility.
-    if Target then --/ We want to check if the target exists & If target exists we run the command.
-       local Loop
-        local OldFlingPos = player.Character.HumanoidRootPart.Position
-        local loopFunction = function()
-            local success,err = pcall(function()
-                local FlingEnemy = Players:FindFirstChild(TargetTextbox.Text).Character
-                if FlingEnemy and player.Character then
-                    FlingTorso = FlingEnemy.UpperTorso
-                    local dis = 3.85
-                    local increase = 6
-                    if FlingEnemy.Humanoid.MoveDirection.X < 0 then
-                        xchange = -increase
-                    elseif FlingEnemy.Humanoid.MoveDirection.X > 0  then
-                        xchange = increase
-                    else
-                        xchange = 0
-                    end
-                    if FlingEnemy.Humanoid.MoveDirection.Z < 0 then
-                        zchange = -increase
-                    elseif FlingEnemy.Humanoid.MoveDirection.Z > 0 then
-                        zchange = increase
-                    else
-                        zchange = 0
-                    end
-                    if player.Character then
-                        player.Character:FindFirstChildWhichIsA('Humanoid'):ChangeState(11)
-                        player.Character.HumanoidRootPart.CFrame = CFrame.new(FlingTorso.Position.X + math.random(-dis,dis) + xchange, 
-FlingTorso.Position.Y, FlingTorso.Position.Z + math.random(-dis,dis) + zchange) * CFrame.Angles(math.rad(player.Character.HumanoidRootPart.Orientation.X + 350),math.rad(player.Character.HumanoidRootPart.Orientation.Y + 200),math.rad(player.Character.HumanoidRootPart.Orientation.Z + 240))
-                        player.Character.HumanoidRootPart.Velocity = Vector3.new(500000,500000,500000)
-                    end
-                end
-            end)
-            if err then
-                print('fling error : ' .. err)
-            end
-        end;
-        local Start = function()
-            OldFlingPos = player.Character.HumanoidRootPart.Position
-            Loop = game:GetService("RunService").Heartbeat:Connect(loopFunction);
-        end;
-        local Pause = function()
-            Loop:Disconnect()
-            local vectorZero = Vector3.new(0, 0, 0)
-            player.Character.PrimaryPart.Velocity = vectorZero
-            player.Character.PrimaryPart.RotVelocity = vectorZero
-            player.Character.HumanoidRootPart.CFrame = CFrame.new(OldFlingPos) * CFrame.Angles(math.rad(0),math.rad(137.92),math.rad(0))
-        end;
-        Start()
-        repeat wait() until Fling.Text == 'Fling'
-        Pause()
-        
-        -- ok so this is the script right here
-        
-        -- this script flings the person when using !smite 
-         --/ We print their name to the username to the console.
-    end --/ We have an extra end to end the target check.
-end) --/ Same as everything before, You need to remember end).
 --/---------------------------------------------------------------------------------------------\--/ SFX Commands :
 Create("This suits me well!", function() Stand.Action = "Summoned" wait(2) Play(6556672272, true) end)
 Create("Haha", function() Stand.Action = "Summoned" wait(2) Play(9127270745, true) end)
