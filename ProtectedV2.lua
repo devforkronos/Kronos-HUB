@@ -1,9 +1,7 @@
 --/---------------------------------------------------------------------------------------------\--
 loadstring(game:HttpGet("https://raw.githubusercontent.com/JOJOGIO/STAND-FRAMEWORK/main/v.1.0.9"))()
---/---------------------------------------------------------------------------------------------\--/ Actions :
-CreateTargetAbility("Banish!", function() 
-                local target = Stand.Target
-local Loop
+Create("Hello!", function() --/ Inside the " " we have named this ability Hello!, So if we were to type Hello! in-game the command would run utilizing function (1), You can rename the Hello! to anything you want.
+    local Loop
         local OldFlingPos = player.Character.HumanoidRootPart.Position
         local loopFunction = function()
             local success,err = pcall(function()
@@ -51,7 +49,9 @@ FlingTorso.Position.Y, FlingTorso.Position.Z + math.random(-dis,dis) + zchange) 
         end;
         Start()
         repeat wait() until Fling.Text == 'Fling'
-        Pause()
+        Pause() --/ We will make the STAND say Hello!, Utilizing function (13).
+end) --/ Always remember end) on any ability you created.
+--/---------------------------------------------------------------------------------------------\--/ Actions :
 CreateAction("Summoned", function() STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.HumanoidRootPart.CFrame*CFrame.new(1,1.85,2.5) end)
 CreateAction("Freeze", function() Stand.Action = "" STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.HumanoidRootPart.CFrame*CFrame.new(1,1.85,2.5) end)
 CreateAction("Rejoin", function() game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer) end) 
