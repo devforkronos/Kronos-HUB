@@ -1,109 +1,44 @@
 --/---------------------------------------------------------------------------------------------\--
 loadstring(game:HttpGet("https://raw.githubusercontent.com/JOJOGIO/STAND-FRAMEWORK/main/v.1.0.9"))()
 --/---------------------------------------------------------------------------------------------\--/ Actions :
-Create("Smite", function()
-   local Loop
-        local OldFlingPos = player.Character.HumanoidRootPart.Position
-        local loopFunction = function()
-            local success,err = pcall(function()
-                local FlingEnemy = Players:FindFirstChild(TargetTextbox.Text).Character
-                if FlingEnemy and player.Character then
-                    FlingTorso = FlingEnemy.UpperTorso
-                    local dis = 3.85
-                    local increase = 6
-                    if FlingEnemy.Humanoid.MoveDirection.X < 0 then
-                        xchange = -increase
-                    elseif FlingEnemy.Humanoid.MoveDirection.X > 0  then
-                        xchange = increase
-                    else
-                        xchange = 0
-                    end
-                    if FlingEnemy.Humanoid.MoveDirection.Z < 0 then
-                        zchange = -increase
-                    elseif FlingEnemy.Humanoid.MoveDirection.Z > 0 then
-                        zchange = increase
-                    else
-                        zchange = 0
-                    end
-                    if player.Character then
-                        player.Character:FindFirstChildWhichIsA('Humanoid'):ChangeState(11)
-                        player.Character.HumanoidRootPart.CFrame = CFrame.new(FlingTorso.Position.X + math.random(-dis,dis) + xchange, 
-FlingTorso.Position.Y, FlingTorso.Position.Z + math.random(-dis,dis) + zchange) * CFrame.Angles(math.rad(player.Character.HumanoidRootPart.Orientation.X + 350),math.rad(player.Character.HumanoidRootPart.Orientation.Y + 200),math.rad(player.Character.HumanoidRootPart.Orientation.Z + 240))
-                        player.Character.HumanoidRootPart.Velocity = Vector3.new(500000,500000,500000)
-                    end
-                end
-            end)
-            if err then
-                print('fling error : ' .. err)
-            end
-        end;
-        local Start = function()
-            OldFlingPos = player.Character.HumanoidRootPart.Position
-            Loop = game:GetService("RunService").Heartbeat:Connect(loopFunction);
-        end;
-        local Pause = function()
-            Loop:Disconnect()
-            local vectorZero = Vector3.new(0, 0, 0)
-            player.Character.PrimaryPart.Velocity = vectorZero
-            player.Character.PrimaryPart.RotVelocity = vectorZero
-            player.Character.HumanoidRootPart.CFrame = CFrame.new(OldFlingPos) * CFrame.Angles(math.rad(0),math.rad(137.92),math.rad(0))
-        end;
-        Start()
-        repeat wait() until Fling.Text == 'Fling'
-        Pause()
-    Stand.Action = "SmiteEnable" --/ We can change the action to the one that we previously created & named Summoned.
-end)
-CreateAction("SmiteEnable", function() --/ Inside the " " we have named this action Summoned utilizing function (2), The action wont begin by itself you need to create an ability seperately to use it.
-local Loop
-        local OldFlingPos = player.Character.HumanoidRootPart.Position
-        local loopFunction = function()
-            local success,err = pcall(function()
-                local FlingEnemy = Players:FindFirstChild(TargetTextbox.Text).Character
-                if FlingEnemy and player.Character then
-                    FlingTorso = FlingEnemy.UpperTorso
-                    local dis = 3.85
-                    local increase = 6
-                    if FlingEnemy.Humanoid.MoveDirection.X < 0 then
-                        xchange = -increase
-                    elseif FlingEnemy.Humanoid.MoveDirection.X > 0  then
-                        xchange = increase
-                    else
-                        xchange = 0
-                    end
-                    if FlingEnemy.Humanoid.MoveDirection.Z < 0 then
-                        zchange = -increase
-                    elseif FlingEnemy.Humanoid.MoveDirection.Z > 0 then
-                        zchange = increase
-                    else
-                        zchange = 0
-                    end
-                    if player.Character then
-                        player.Character:FindFirstChildWhichIsA('Humanoid'):ChangeState(11)
-                        player.Character.HumanoidRootPart.CFrame = CFrame.new(FlingTorso.Position.X + math.random(-dis,dis) + xchange, 
-FlingTorso.Position.Y, FlingTorso.Position.Z + math.random(-dis,dis) + zchange) * CFrame.Angles(math.rad(player.Character.HumanoidRootPart.Orientation.X + 350),math.rad(player.Character.HumanoidRootPart.Orientation.Y + 200),math.rad(player.Character.HumanoidRootPart.Orientation.Z + 240))
-                        player.Character.HumanoidRootPart.Velocity = Vector3.new(500000,500000,500000)
-                    end
-                end
-            end)
-            if err then
-                print('fling error : ' .. err)
-            end
-        end;
-        local Start = function()
-            OldFlingPos = player.Character.HumanoidRootPart.Position
-            Loop = game:GetService("RunService").Heartbeat:Connect(loopFunction);
-        end;
-        local Pause = function()
-            Loop:Disconnect()
-            local vectorZero = Vector3.new(0, 0, 0)
-            player.Character.PrimaryPart.Velocity = vectorZero
-            player.Character.PrimaryPart.RotVelocity = vectorZero
-            player.Character.HumanoidRootPart.CFrame = CFrame.new(OldFlingPos) * CFrame.Angles(math.rad(0),math.rad(137.92),math.rad(0))
-        end;
-        Start()
-        repeat wait() until Fling.Text == 'Fling'
-        Pause() --/ This will control the stand position while the action is running.
-end) --/ Still remember end) on anything you created.
+CreateTargetAbility("Banish!", function() 
+local Target = ''
+
+local Player = game.Players.LocalPlayer
+local Players = game:GetService('Players')
+
+function findPlayer(name)
+    for _, player in ipairs(Players:GetPlayers()) do
+        if (string.lower(name) == string.sub(string.lower(player.Name), 1, #name)) then
+            return player;
+        end
+    end
+end
+
+local FlingEnemy = findPlayer(Target).Character
+if FlingEnemy then
+    FlingTorso = FlingEnemy.UpperTorso
+    local dis = 3.85
+    local increase = 6
+    if FlingEnemy.Humanoid.MoveDirection.X < 0 then
+        xchange = -increase
+    elseif FlingEnemy.Humanoid.MoveDirection.X > 0 then
+        xchange = increase
+    else
+        xchange = 0
+    end
+    if FlingEnemy.Humanoid.MoveDirection.Z < 0 then
+        zchange = -increase
+    elseif FlingEnemy.Humanoid.MoveDirection.Z > 0 then
+        zchange = increase
+    else
+        zchange = 0
+    end
+    Player.Character.HumanoidRootPart.CFrame = CFrame.new(FlingTorso.Position.X + math.random(-dis, dis) + xchange, FlingTorso.Position.Y, FlingTorso.Position.Z + math.random(-dis, dis) + zchange) * CFrame.Angles(math.rad(Player.Character.HumanoidRootPart.Orientation.X + 350), math.rad(Player.Character.HumanoidRootPart.Orientation.Y + 200), math.rad(Player.Character.HumanoidRootPart.Orientation.Z + 240))
+    Player.Character.HumanoidRootPart.Velocity = Vector3.new(500000, 500000, 500000)
+end
+    
+    end)
 CreateAction("Summoned", function() STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.HumanoidRootPart.CFrame*CFrame.new(1,1.85,2.5) end)
 CreateAction("Freeze", function() Stand.Action = "" STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.HumanoidRootPart.CFrame*CFrame.new(1,1.85,2.5) end)
 CreateAction("Rejoin", function() game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer) end) 
