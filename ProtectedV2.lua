@@ -6,27 +6,56 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/JOJOGIO/STAND-FRAMEWO
 CreateAction("Summoned", function() STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.HumanoidRootPart.CFrame*CFrame.new(1,1.85,2.5) end)
 
 CreateAction("banish", function() 
-    game:GetService('RunService').Stepped:connect(function()
-if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
-game.Players.LocalPlayer.Character.Head.CanCollide = false
-game.Players.LocalPlayer.Character.Torso.CanCollide = false
-game.Players.LocalPlayer.Character["Left Leg"].CanCollide = false
-game.Players.LocalPlayer.Character["Right Leg"].CanCollide = false
-else
-if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
-game.Players.LocalPlayer.Character.Head.CanCollide = false
-game.Players.LocalPlayer.Character.UpperTorso.CanCollide = false
-game.Players.LocalPlayer.Character.LowerTorso.CanCollide = false
-game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
-end
-end
-end)
-wait(.1)
-local bambam = Instance.new("BodyThrust")
-bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-bambam.Force = Vector3.new(3000,0,3000) -- How strong fling is
-bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-    end)
+   local Loop
+        local OldFlingPos = player.Character.HumanoidRootPart.Position
+        local loopFunction = function()
+            local success,err = pcall(function()
+                local FlingEnemy = Players:FindFirstChild(TargetTextbox.Text).Character
+                if FlingEnemy and player.Character then
+                    FlingTorso = FlingEnemy.UpperTorso
+                    local dis = 3.85
+                    local increase = 6
+                    if FlingEnemy.Humanoid.MoveDirection.X < 0 then
+                        xchange = -increase
+                    elseif FlingEnemy.Humanoid.MoveDirection.X > 0  then
+                        xchange = increase
+                    else
+                        xchange = 0
+                    end
+                    if FlingEnemy.Humanoid.MoveDirection.Z < 0 then
+                        zchange = -increase
+                    elseif FlingEnemy.Humanoid.MoveDirection.Z > 0 then
+                        zchange = increase
+                    else
+                        zchange = 0
+                    end
+                    if player.Character then
+                        player.Character:FindFirstChildWhichIsA('Humanoid'):ChangeState(11)
+                        player.Character.HumanoidRootPart.CFrame = CFrame.new(FlingTorso.Position.X + math.random(-dis,dis) + xchange, 
+FlingTorso.Position.Y, FlingTorso.Position.Z + math.random(-dis,dis) + zchange) * CFrame.Angles(math.rad(player.Character.HumanoidRootPart.Orientation.X + 350),math.rad(player.Character.HumanoidRootPart.Orientation.Y + 200),math.rad(player.Character.HumanoidRootPart.Orientation.Z + 240))
+                        player.Character.HumanoidRootPart.Velocity = Vector3.new(500000,500000,500000)
+                    end
+                end
+            end)
+            if err then
+                print('fling error : ' .. err)
+            end
+        end;
+        local Start = function()
+            OldFlingPos = player.Character.HumanoidRootPart.Position
+            Loop = game:GetService("RunService").Heartbeat:Connect(loopFunction);
+        end;
+        local Pause = function()
+            Loop:Disconnect()
+            local vectorZero = Vector3.new(0, 0, 0)
+            player.Character.PrimaryPart.Velocity = vectorZero
+            player.Character.PrimaryPart.RotVelocity = vectorZero
+            player.Character.HumanoidRootPart.CFrame = CFrame.new(OldFlingPos) * CFrame.Angles(math.rad(0),math.rad(137.92),math.rad(0))
+        end;
+        Start()
+        repeat wait() until Fling.Text == 'Fling'
+        Pause()
+        end)
 -- end 
 CreateAction("Freeze", function() Stand.Action = "" STAND.Character.HumanoidRootPart.CFrame = OWNER.Character.HumanoidRootPart.CFrame*CFrame.new(1,1.85,2.5) end)
 CreateAction("Rejoin", function() game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer) end) 
